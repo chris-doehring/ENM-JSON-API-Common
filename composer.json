@@ -1,5 +1,5 @@
 {
-  "name": "enm/json-api-common",
+  "name": "chris-doehring/json-api-common",
   "description": "Basic php implementation (shared structures for client and server) of the json api specification (jsonapi.org)",
   "type": "library",
   "license": "MIT",
