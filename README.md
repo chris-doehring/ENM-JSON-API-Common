@@ -6,7 +6,7 @@ This library contains php classes and interfaces shared between
 [`chris-doehring/enm-json-api-server`](https://github.com/chris-doehring/ENM-JSON-API-Server) and 
 [`chris-doehring/enm-json-api-client`](https://github.com/chris-doehring/ENM-JSON-API-Client).
 
-It's based on the original creation of the [https://github.com/eosnewmedia](eosnewmedia team) and the maintainer [https://github.com/pmarien](Philipp Marien).
+It's based on the original creation of the [eosnewmedia team](https://github.com/eosnewmedia) and the maintainer [Philipp Marien](https://github.com/pmarien).
 
 ## Installation
 

@@ -1,4 +1,13 @@
 # Changelog
+## 4.0.0
+1. Fork release of the original package to implement further features
+1. Allow the `id` method of the `ResourceInterface` to contain a `null` value in favor of server generated resource IDs
+1. Allow the `JsonApiException` to contain a collection of errors by default
+1. Added the `errors(): ErrorCollectionInterface` method to the `JsonApiException`
+1. Removed the `createError(): ErrorInterface` method in the `JsonApiException`
+1. Added the `first(): ?ErrorInterface` method to the `ErrorCollectionInterface`
+1. Fix a bug in the URI field generation of the `Request` class (Thanks to https://github.com/eosnewmedia/JSON-API-Common/pull/21)
+
 ## 3.2.0
 1. added "merge" to resource collections
 1. added "merge" to relationship collections
