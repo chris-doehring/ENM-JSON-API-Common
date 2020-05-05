@@ -9,7 +9,7 @@ use Psr\Http\Message\UriInterface;
 
 /**
  * @author Philipp Marien <marien@eosnewmedia.de>
- * @deprecated will be removed in 4.0
+ * @deprecated will be removed in a future release
  */
 class SaveSingleResourceRequest extends Request
 {
