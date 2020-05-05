@@ -267,9 +267,9 @@ class Request implements RequestInterface
             }
         }
 
-        $fields = [];
+        $fieldsByType = [];
         foreach ($this->fields as $type => $fields) {
-            $fields[$type] = implode(',', $fields);
+            $fieldsByType[$type] = implode(',', $fields);
         }
 
         $query = [
@@ -278,7 +278,7 @@ class Request implements RequestInterface
             'page' => $this->pagination,
             'filter' => $this->filter,
             'include' => implode(',', $this->includes),
-            'fields' => $fields
+            'fields' => $fieldsByType
         ];
 
         // Remove empty query params.
