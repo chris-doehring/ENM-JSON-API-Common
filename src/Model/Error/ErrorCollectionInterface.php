@@ -21,4 +21,9 @@ interface ErrorCollectionInterface extends CollectionInterface
      * @return ErrorCollectionInterface
      */
     public function add(ErrorInterface $error): ErrorCollectionInterface;
+
+    /**
+     * @return ErrorInterface|null
+     */
+    public function first(): ?ErrorInterface;
 }
