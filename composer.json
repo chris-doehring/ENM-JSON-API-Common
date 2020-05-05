@@ -1,5 +1,5 @@
 {
-  "name": "chris-doehring/json-api-common",
+  "name": "chris-doehring/enm-json-api-common",
   "description": "Basic php implementation (shared structures for client and server) of the json api specification (jsonapi.org)",
   "type": "library",
   "license": "MIT",
@@ -7,6 +7,10 @@
     {
       "name": "Philipp Marien",
       "email": "marien@eosnewmedia.de"
+    },
+    {
+      "name": "Chris Doehring",
+      "email": "info@chrisdoehring.de"
     }
   ],
   "minimum-stability": "stable",
