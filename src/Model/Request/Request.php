@@ -109,10 +109,6 @@ class Request implements RequestInterface
             throw new BadRequestException('Resource type missing.');
         }
         $this->id = $segments[1];
-        if ($this->id === '') {
-            throw new BadRequestException('Invalid resource id given.');
-        }
-
         if ($this->id) {
             // parse relationship/related request
             if ($segments[3]) {

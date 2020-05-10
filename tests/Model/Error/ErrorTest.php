@@ -28,6 +28,7 @@ class ErrorTest extends TestCase
         );
 
         $error->metaInformation()->set('test', 'test');
+        $error->source()->set('sourceTest', 'sourceTest');
 
         self::assertEquals('invalid_request', $error->code());
 
@@ -41,6 +42,7 @@ class ErrorTest extends TestCase
         );
 
         self::assertEquals('test', $error->metaInformation()->getRequired('test'));
+        self::assertEquals('sourceTest', $error->source()->getRequired('sourceTest'));
     }
 
     public function testErrorFromException(): void

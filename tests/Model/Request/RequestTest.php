@@ -56,4 +56,68 @@ class RequestTest extends TestCase
             'api'
         );
     }
+
+    public function testInvalidHttpMethod(): void
+    {
+        $this->expectException(BadRequestException::class);
+        new Request(
+            'no HTTP status',
+            new Uri('/index.php/api')
+        );
+    }
+
+    public function testInvalidRelationshipKeyword(): void
+    {
+        $this->expectException(BadRequestException::class);
+        new Request(
+            'GET',
+            new Uri('/index.php/api/example/1/noRelationshipKeyword/exampleRelationship'),
+            null,
+            'api'
+        );
+    }
+
+    public function testRelationshipDetailRequest(): void
+    {
+        $request = new Request(
+            'GET',
+            new Uri('/index.php/api/example/1/relationships/exampleRelationshipDetail'),
+            null,
+            'api'
+        );
+        $this->assertEquals('exampleRelationshipDetail', $request->relationship());
+    }
+
+    public function testRelationshipRequest(): void
+    {
+        $request = new Request(
+            'GET',
+            new Uri('/index.php/api/example/1/exampleRelationship'),
+            null,
+            'api'
+        );
+        $this->assertEquals('exampleRelationship', $request->relationship());
+    }
+
+    public function testInvalidIncludeDatatype(): void
+    {
+        $this->expectException(BadRequestException::class);
+        new Request(
+            'GET',
+            new Uri('/index.php/api/examples/example-1?include[]=test'),
+            null,
+            'api'
+        );
+    }
+
+    public function testInvalidFieldsDatatype(): void
+    {
+        $this->expectException(BadRequestException::class);
+        new Request(
+            'GET',
+            new Uri('/index.php/api/examples/example-1?fields=test'),
+            null,
+            'api'
+        );
+    }
 }

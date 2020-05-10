@@ -54,4 +54,10 @@ class DocumentTest extends TestCase
         self::assertEquals(0, $document->errors()->count());
         self::assertFalse($document->shouldBeHandledAsCollection());
     }
+
+    public function testInvalidDocumentData(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        new Document(1);
+    }
 }
