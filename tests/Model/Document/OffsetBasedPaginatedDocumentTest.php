@@ -8,13 +8,14 @@ use Psr\Http\Message\UriInterface;
 
 class OffsetBasedPaginatedDocumentTest extends TestCase
 {
-    public function testInstance(): void
+    /** @dataProvider provideTestScenarios */
+    public function testInstance(int $offset): void
     {
-        $resultCount = rand(12, 5999);
+        $resultCount = rand(22, 5999);
         $defaultLimit = 10;
         $uri = $this->createMock(UriInterface::class);
         $uri->expects(self::once())->method('__toString')->willReturn('/api/example/1');
-        $uri->expects(self::atLeastOnce())->method('getQuery')->willReturn('');
+        $uri->expects(self::atLeastOnce())->method('getQuery')->willReturn('/api/example?page[offset]='.$offset.'&page[limit]=10');
         $uri->expects(self::atLeastOnce())->method('withQuery')->willReturn('/api/example/1?test=1');
         $document = new OffsetBasedPaginatedDocument(
             $this->createMock(ResourceInterface::class),
@@ -22,7 +23,17 @@ class OffsetBasedPaginatedDocumentTest extends TestCase
             $resultCount,
             $defaultLimit
         );
-        self::assertEquals(1, $document->data()->count());
-        self::assertFalse($document->shouldBeHandledAsCollection());
+        self::assertEquals(true, $document->links()->has('self'));
+        self::assertEquals(true, $document->links()->has('next'));
+        self::assertEquals(true, $document->links()->has('last'));
+    }
+
+    public function provideTestScenarios(): array
+    {
+        return [
+            [0],
+            [10],
+            [20],
+        ];
     }
 }
