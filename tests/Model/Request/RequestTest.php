@@ -66,12 +66,23 @@ class RequestTest extends TestCase
         $request->addFilter('newFilter', 'value');
         self::assertTrue($request->hasFilter('newFilter'));
 
+        $filterString = '1,2,3';
+        $request->addFilter('customArrayFilter', $filterString);
+        self::assertEquals(explode(',', $filterString), $request->filterValue('customArrayFilter', ','));
+
         self::assertFalse($request->hasPagination('newPagination'));
         $request->addPagination('newPagination', 'value');
         self::assertTrue($request->hasPagination('newPagination'));
 
         $request->requestInclude('examples');
         self::assertTrue($request->requestsInclude('examples'));
+
+        self::assertArrayNotHasKey('newOrder', $request->order());
+        $request->addOrderBy('newOrder', Request::ORDER_ASC);
+        self::assertArrayHasKey('newOrder', $request->order());
+        self::assertEquals(Request::ORDER_ASC, $request->order()['newOrder']);
+        $request->addOrderBy('newOrder', Request::ORDER_DESC);
+        self::assertEquals(Request::ORDER_DESC, $request->order()['newOrder']);
     }
 
     public function testCreateFromHttpRequest(): void
