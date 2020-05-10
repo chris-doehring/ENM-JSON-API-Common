@@ -15,7 +15,7 @@ class OffsetBasedPaginatedDocumentTest extends TestCase
         $defaultLimit = 10;
         $uri = $this->createMock(UriInterface::class);
         $uri->expects(self::once())->method('__toString')->willReturn('/api/example/1');
-        $uri->expects(self::atLeastOnce())->method('getQuery')->willReturn('/api/example?page[offset]='.$offset.'&page[limit]=10');
+        $uri->expects(self::atLeastOnce())->method('getQuery')->willReturn('page[offset]='.$offset.'&page[limit]=10');
         $uri->expects(self::atLeastOnce())->method('withQuery')->willReturn('/api/example/1?test=1');
         $document = new OffsetBasedPaginatedDocument(
             $this->createMock(ResourceInterface::class),
@@ -23,9 +23,10 @@ class OffsetBasedPaginatedDocumentTest extends TestCase
             $resultCount,
             $defaultLimit
         );
-        self::assertEquals(true, $document->links()->has('self'));
-        self::assertEquals(true, $document->links()->has('next'));
-        self::assertEquals(true, $document->links()->has('last'));
+        self::assertTrue($document->links()->has('self'));
+        self::assertEquals(0 === $offset ? false : true, $document->links()->has('previous'));
+        self::assertTrue($document->links()->has('next'));
+        self::assertTrue($document->links()->has('last'));
     }
 
     public function provideTestScenarios(): array
