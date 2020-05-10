@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Enm\JsonApi\Model\Request;
 
 use Enm\JsonApi\Exception\BadRequestException;
-use Enm\JsonApi\Exception\UnsupportedMediaTypeException;
 use Enm\JsonApi\Model\Common\KeyValueCollection;
 use Enm\JsonApi\Model\Common\KeyValueCollectionInterface;
 use Enm\JsonApi\Model\Document\DocumentInterface;
@@ -228,7 +227,6 @@ class Request implements RequestInterface
 
     /**
      * @throws BadRequestException
-     * @throws UnsupportedMediaTypeException
      */
     public static function createFromHttpRequest(
         \Psr\Http\Message\RequestInterface $request,
@@ -239,10 +237,6 @@ class Request implements RequestInterface
 
         foreach ($request->getHeaders() as $header => $values) {
             $apiRequest->headers()->set($header, \count($values) !== 1 ? $values : $values[0]);
-        }
-
-        if ($apiRequest->headers()->getRequired('content-type') !== JsonApi::CONTENT_TYPE) {
-            throw new UnsupportedMediaTypeException($apiRequest->headers()->getRequired('content-type'));
         }
 
         return $apiRequest;

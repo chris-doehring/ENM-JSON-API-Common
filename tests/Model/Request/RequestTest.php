@@ -9,7 +9,9 @@ use Enm\JsonApi\Model\JsonApi;
 use Enm\JsonApi\Model\Request\Request;
 use Faker\Factory;
 use GuzzleHttp\Psr7\Uri;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
@@ -67,6 +69,36 @@ class RequestTest extends TestCase
         self::assertFalse($request->hasPagination('newPagination'));
         $request->addPagination('newPagination', 'value');
         self::assertTrue($request->hasPagination('newPagination'));
+
+        $request->requestInclude('examples');
+        self::assertTrue($request->requestsInclude('examples'));
+    }
+
+    public function testCreateFromHttpRequest(): void
+    {
+        $faker = Factory::create();
+        /** @var RequestInterface|MockObject $requestInterface */
+        $requestInterface = $this->getMockBuilder(RequestInterface::class)->getMock();
+        /** @var UriInterface|MockObject $request */
+        $uri = $this->getMockBuilder(UriInterface::class)->getMock();
+        $uri->expects(self::once())->method('getPath')->willReturn('/index.php/api/example');
+        $uri->expects(self::once())->method('getQuery')->willReturn('');
+        /** @var Document $requestBody */
+        $requestBody = $this->getMockBuilder(Document::class)->disableOriginalConstructor()->getMock();
+        $method = 'POST';
+
+        $requestInterface->expects(self::once())->method('getMethod')->willReturn($method);
+        $requestInterface->expects(self::once())->method('getUri')->willReturn($uri);
+        $headers = [
+            'Content-Type' => [JsonApi::CONTENT_TYPE],
+            $faker->word => [$faker->userName],
+        ];
+        $requestInterface->expects(self::once())->method('getHeaders')->willReturn($headers);
+
+        $request = Request::createFromHttpRequest($requestInterface, $requestBody, 'api');
+        $this->assertEquals($method, $request->method());
+        $this->assertEquals($uri, $request->uri());
+        $this->assertEquals($requestBody, $request->requestBody());
     }
 
     public function testRequestInvalidType(): void
