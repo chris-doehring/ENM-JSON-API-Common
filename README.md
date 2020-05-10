@@ -1,6 +1,11 @@
 JSON API Common
 ===============
 [![Build Status](https://travis-ci.org/chris-doehring/ENM-JSON-API-Common.svg?branch=master)](https://travis-ci.org/chris-doehring/ENM-JSON-API-Common)
+[![Coverage Status](https://coveralls.io/repos/github/chris-doehring/ENM-JSON-API-Common/badge.svg?branch=master)](https://coveralls.io/github/chris-doehring/ENM-JSON-API-Common?branch=master)
+[![Total Downloads](https://poser.pugx.org/chris-doehring/enm-json-api-common/downloads)](https://packagist.org/packages/chris-doehring/enm-json-api-common)
+[![Latest Stable Version](https://poser.pugx.org/chris-doehring/enm-json-api-common/v/stable)](https://packagist.org/packages/chris-doehring/enm-json-api-common)
+[![Latest Unstable Version](https://poser.pugx.org/chris-doehring/enm-json-api-common/v/unstable.png)](https://packagist.org/packages/chris-doehring/enm-json-api-common)
+[![License](https://poser.pugx.org/chris-doehring/enm-json-api-common/license)](https://packagist.org/packages/chris-doehring/enm-json-api-common)
 
 This library contains php classes and interfaces shared between 
 [`chris-doehring/enm-json-api-server`](https://github.com/chris-doehring/ENM-JSON-API-Server) and 
