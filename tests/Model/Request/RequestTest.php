@@ -4,9 +4,13 @@ declare(strict_types=1);
 namespace Enm\JsonApi\Tests\Model\Request;
 
 use Enm\JsonApi\Exception\BadRequestException;
+use Enm\JsonApi\Model\Document\Document;
+use Enm\JsonApi\Model\JsonApi;
 use Enm\JsonApi\Model\Request\Request;
+use Faker\Factory;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\UriInterface;
 
 /**
  * @author Philipp Marien <marien@eosnewmedia.de>
@@ -15,11 +19,15 @@ class RequestTest extends TestCase
 {
     public function testRequest(): void
     {
+        $allowedMethods = ['GET', 'POST', 'PATCH', 'DELETE'];
+        $method = $allowedMethods[array_rand($allowedMethods)];
+        /** @var Document $requestBody */
+        $requestBody = $this->getMockBuilder(Document::class)->disableOriginalConstructor()->getMock();
         try {
             $request = new Request(
-                'GET',
+                $method,
                 new Uri('/index.php/api/examples/example-1?include=tests,tests.user&fields[user]=username,birthday&page[offset]=0&page[limit]=10&sort=-createdAt&filter[test]=test'),
-                null,
+                $requestBody,
                 'api'
             );
         } catch (\Exception $e) {
@@ -27,6 +35,9 @@ class RequestTest extends TestCase
             return;
         }
 
+        self::assertEquals($method, $request->method());
+        self::assertInstanceOf(UriInterface::class, $request->uri());
+        self::assertEquals($requestBody, $request->requestBody());
         self::assertEquals('examples', $request->type());
         self::assertEquals('example-1', $request->id());
         self::assertNull($request->relationship());
@@ -44,6 +55,18 @@ class RequestTest extends TestCase
         self::assertEquals(['createdAt' => 'desc'], $request->order());
         self::assertEquals('0', $request->paginationValue('offset'));
         self::assertEquals('10', $request->paginationValue('limit'));
+        self::assertEquals(JsonApi::CONTENT_TYPE, $request->headers()->getRequired('Content-Type'));
+
+        $request->requestField('user', 'password');
+        self::assertTrue($request->requestsField('user', 'password'));
+
+        self::assertFalse($request->hasFilter('newFilter'));
+        $request->addFilter('newFilter', 'value');
+        self::assertTrue($request->hasFilter('newFilter'));
+
+        self::assertFalse($request->hasPagination('newPagination'));
+        $request->addPagination('newPagination', 'value');
+        self::assertTrue($request->hasPagination('newPagination'));
     }
 
     public function testRequestInvalidType(): void
@@ -116,6 +139,55 @@ class RequestTest extends TestCase
         new Request(
             'GET',
             new Uri('/index.php/api/examples/example-1?fields=test'),
+            null,
+            'api'
+        );
+    }
+
+    public function testNotSupportedFilterString(): void
+    {
+        $this->expectException(BadRequestException::class);
+        new Request(
+            'GET',
+            new Uri('/index.php/api/examples/example-1?filter=notSupported'),
+            null,
+            'api'
+        );
+    }
+
+    public function testJsonAsFilterString(): void
+    {
+        $faker = Factory::create();
+        $filterKey = $faker->word;
+        $filter = [
+            $filterKey => $faker->name,
+        ];
+        $request = new Request(
+            'GET',
+            new Uri('/index.php/api/examples/example-1?filter='.json_encode($filter)),
+            null,
+            'api'
+        );
+        $this->assertEquals($filter[$filterKey], $request->filterValue($filterKey));
+    }
+
+    public function testInvalidPaginationDatatype(): void
+    {
+        $this->expectException(BadRequestException::class);
+        new Request(
+            'GET',
+            new Uri('/index.php/api/examples/example-1?page=invalid'),
+            null,
+            'api'
+        );
+    }
+
+    public function testInvalidSortingDatatype(): void
+    {
+        $this->expectException(BadRequestException::class);
+        new Request(
+            'GET',
+            new Uri('/index.php/api/examples/example-1?sort[]=invalid'),
             null,
             'api'
         );
