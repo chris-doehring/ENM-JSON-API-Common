@@ -1,4 +1,10 @@
 # Changelog
+## 5.0.0
+1. Change the minimum php version to `>=7.4` and implement the new php features
+1. Remove unnecessary phpdocs comments
+1. Remove the object mapper feature
+1. Remove deprecated relationship and resource specific requests
+
 ## 4.0.0
 1. Fork release of the original package to implement further features
 1. Allow the `id` method of the `ResourceInterface` to contain a `null` value in favor of server generated resource IDs

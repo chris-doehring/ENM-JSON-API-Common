@@ -8,17 +8,11 @@ namespace Enm\JsonApi\Exception;
  */
 class UnsupportedTypeException extends JsonApiException
 {
-    /**
-     * @param string $type
-     */
     public function __construct(string $type)
     {
         parent::__construct('Resource type "' . $type . '" not found');
     }
 
-    /**
-     * @return int
-     */
     public function getHttpStatus(): int
     {
         return 404;

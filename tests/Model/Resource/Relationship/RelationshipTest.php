@@ -55,19 +55,15 @@ class RelationshipTest extends TestCase
         self::assertEquals(0, $relation->related()->count());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidNamedRelationship(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Relationship('');
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testImmutableToOne(): void
     {
+        $this->expectException(\LogicException::class);
         $relation = new Relationship('test', $this->createMock(ResourceInterface::class));
         /** @var ResourceInterface $resource */
         $resource = $this->createConfiguredMock(
@@ -124,11 +120,9 @@ class RelationshipTest extends TestCase
         self::assertSame($collection, $relation->related());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidRelationshipData(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Relationship('test', 'test');
     }
 }

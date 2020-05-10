@@ -10,11 +10,5 @@ use Enm\JsonApi\Model\Document\DocumentInterface;
  */
 interface DocumentSerializerInterface
 {
-    /**
-     * @param DocumentInterface $document
-     * @param bool $identifiersOnly
-     *
-     * @return array
-     */
     public function serializeDocument(DocumentInterface $document, bool $identifiersOnly = false): array;
 }

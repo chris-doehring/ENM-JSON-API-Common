@@ -17,101 +17,46 @@ use Psr\Http\Message\UriInterface;
  */
 class Request implements RequestInterface
 {
-    /**
-     * @var string
-     */
-    private $method;
+    private string $method;
 
-    /**
-     * @var UriInterface
-     */
-    private $uri;
+    private UriInterface $uri;
 
-    /**
-     * @var string|null
-     */
-    private $apiPrefix;
+    private ?string $apiPrefix;
 
-    /**
-     * @var string|null
-     */
-    private $fileInPath;
+    private ?string $fileInPath;
 
-    /**
-     * @var KeyValueCollectionInterface
-     */
-    private $headers;
+    private KeyValueCollectionInterface $headers;
 
-    /**
-     * @var string
-     */
-    private $type;
+    private string $type;
 
-    /**
-     * @var string|null
-     */
-    private $id;
+    private ?string $id;
 
-    /**
-     * @var string|null
-     */
-    private $relationship;
+    private ?string $relationship = null;
 
-    /**
-     * @var bool
-     */
-    private $requestsAttributes = true;
+    private bool $requestsAttributes = true;
 
-    /**
-     * @var bool
-     */
-    private $requestsMetaInformation = true;
+    private bool $requestsMetaInformation = true;
 
-    /**
-     * @var array
-     */
-    private $fields = [];
+    private array $fields = [];
 
-    /**
-     * @var array
-     */
-    private $includes = [];
+    private array $includes = [];
 
-    /**
-     * @var array
-     */
-    private $currentLevelIncludes = [];
+    private array $currentLevelIncludes = [];
 
-    /**
-     * @var array
-     */
-    private $filter = [];
+    private array $filter = [];
 
-    /**
-     * @var array
-     */
-    private $order = [];
+    private array $order = [];
 
-    /**
-     * @var array
-     */
-    private $pagination = [];
+    private array $pagination = [];
 
-    /**
-     * @var DocumentInterface|null
-     */
-    private $requestBody;
+    private ?DocumentInterface $requestBody;
 
     /**
      * @var RequestInterface[]
      */
-    private $subRequests = [];
+    private array $subRequests = [];
 
     /**
-     * @param string $method
-     * @param UriInterface $uri
-     * @param DocumentInterface|null $requestBody
-     * @param null|string $apiPrefix
      * @throws BadRequestException
      */
     public function __construct(
@@ -136,13 +81,12 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param string $path
      * @throws BadRequestException
      */
     private function parseUriPath(string $path): void
     {
         preg_match(
-            '/^(([a-zA-Z0-9\_\-\.\/]+.php)(\/)|)(' . $this->apiPrefix . ')([\/a-zA-Z0-9\_\-\.]+)$/',
+            '/^(([a-zA-Z0-9_\-.\/]+.php)(\/)|)(' . $this->apiPrefix . ')([\/a-zA-Z0-9_\-.]+)$/',
             trim($path, '/'),
             $matches
         );
@@ -156,7 +100,7 @@ class Request implements RequestInterface
 
         $segments = explode('/', trim($matches[5], '/'));
         // fill missing segments
-        while (\count($segments) < 4) {
+        while (count($segments) < 4) {
             $segments[] = null;
         }
 
@@ -185,7 +129,6 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param string $uriQuery
      * @throws BadRequestException
      */
     private function parseUriQuery(string $uriQuery): void
@@ -195,7 +138,7 @@ class Request implements RequestInterface
 
         $this->includes = [];
         if ($query->has('include')) {
-            if (!\is_string($query->getRequired('include'))) {
+            if (!is_string($query->getRequired('include'))) {
                 throw new BadRequestException('Invalid include parameter given!');
             }
 
@@ -207,7 +150,7 @@ class Request implements RequestInterface
 
         $this->fields = [];
         if ($query->has('fields')) {
-            if (!\is_array($query->getRequired('fields'))) {
+            if (!is_array($query->getRequired('fields'))) {
                 throw new BadRequestException('Invalid fields parameter given!');
             }
             foreach ((array)$query->getRequired('fields') as $type => $fields) {
@@ -220,10 +163,10 @@ class Request implements RequestInterface
         $this->filter = [];
         if ($query->has('filter')) {
             $filter = $query->getRequired('filter');
-            if (\is_string($filter)) {
+            if (is_string($filter)) {
                 $filter = json_decode($query->getRequired('filter'), true);
             }
-            if (!\is_array($filter)) {
+            if (!is_array($filter)) {
                 throw new BadRequestException('Invalid filter parameter given!');
             }
             $this->filter = $filter;
@@ -288,11 +231,8 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param \Psr\Http\Message\RequestInterface $request
-     * @param DocumentInterface|null $requestBody
-     * @param string|null $apiPrefix
-     * @return Request
-     * @throws BadRequestException|UnsupportedMediaTypeException
+     * @throws BadRequestException
+     * @throws UnsupportedMediaTypeException
      */
     public static function createFromHttpRequest(
         \Psr\Http\Message\RequestInterface $request,
@@ -312,17 +252,11 @@ class Request implements RequestInterface
         return $apiRequest;
     }
 
-    /**
-     * @return string
-     */
     public function method(): string
     {
         return $this->method;
     }
 
-    /**
-     * @return UriInterface
-     */
     public function uri(): UriInterface
     {
         return $this->uri;
@@ -330,8 +264,6 @@ class Request implements RequestInterface
 
     /**
      * Contains all request headers
-     *
-     * @return KeyValueCollectionInterface
      */
     public function headers(): KeyValueCollectionInterface
     {
@@ -340,25 +272,17 @@ class Request implements RequestInterface
 
     /**
      * Contains the requested resource type
-     *
-     * @return string
      */
     public function type(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string|null
-     */
     public function id(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function relationship(): ?string
     {
         return $this->relationship;
@@ -366,7 +290,6 @@ class Request implements RequestInterface
 
     /**
      * Indicates if the response for this request should contain attributes for a resource
-     * @return bool
      */
     public function requestsAttributes(): bool
     {
@@ -375,7 +298,6 @@ class Request implements RequestInterface
 
     /**
      * Indicates if the response for this request should contain meta information for a resource
-     * @return bool
      */
     public function requestsMetaInformation(): bool
     {
@@ -384,17 +306,14 @@ class Request implements RequestInterface
 
     /**
      * Indicates if the response for this request should contain relationships for a resource
-     * @return bool
      */
     public function requestsRelationships(): bool
     {
-        return ($this->requestsAttributes() || $this->requestsMetaInformation()) || \count($this->includes) > 0;
+        return ($this->requestsAttributes() || $this->requestsMetaInformation()) || count($this->includes) > 0;
     }
 
     /**
      * Define a field as requested. This method will manipulate the uri of the request.
-     * @param string $type
-     * @param string $name
      */
     public function requestField(string $type, string $name): void
     {
@@ -402,23 +321,17 @@ class Request implements RequestInterface
         $this->updateUriQuery();
     }
 
-    /**
-     * @param string $type
-     * @param string $name
-     * @return bool
-     */
     public function requestsField(string $type, string $name): bool
     {
         if (!array_key_exists($type, $this->fields)) {
             return true;
         }
 
-        return \in_array($name, $this->fields[$type], true);
+        return in_array($name, $this->fields[$type], true);
     }
 
     /**
      * Define a relationship as included. This method will manipulate the uri of the request.
-     * @param string $relationship
      */
     public function requestInclude(string $relationship): void
     {
@@ -427,17 +340,13 @@ class Request implements RequestInterface
         $this->updateUriQuery();
     }
 
-    /**
-     * @param string $relationship
-     * @return bool
-     */
     public function requestsInclude(string $relationship): bool
     {
-        if (\in_array($relationship, $this->currentLevelIncludes, true)) {
+        if (in_array($relationship, $this->currentLevelIncludes, true)) {
             return true;
         }
 
-        return \in_array($relationship, $this->includes, true);
+        return in_array($relationship, $this->includes, true);
     }
 
     /**
@@ -452,10 +361,6 @@ class Request implements RequestInterface
         $this->updateUriQuery();
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
     public function hasFilter(string $name): bool
     {
         return array_key_exists($name, $this->filter);
@@ -477,8 +382,6 @@ class Request implements RequestInterface
 
     /**
      * Define a sort parameter. This method will manipulate the uri of the request.
-     * @param string $name
-     * @param string $direction
      */
     public function addOrderBy(string $name, string $direction = self::ORDER_ASC): void
     {
@@ -488,7 +391,6 @@ class Request implements RequestInterface
 
     /**
      * The field name is always the key while the value always have to be self::ORDER_ASC or self::ORDER_DESC
-     * @return array
      */
     public function order(): array
     {
@@ -506,10 +408,6 @@ class Request implements RequestInterface
         $this->updateUriQuery();
     }
 
-    /**
-     * @param string $key
-     * @return bool
-     */
     public function hasPagination(string $key): bool
     {
         return array_key_exists($key, $this->pagination);
@@ -524,9 +422,6 @@ class Request implements RequestInterface
         return $this->pagination[$key];
     }
 
-    /**
-     * @return DocumentInterface|null
-     */
     public function requestBody(): ?DocumentInterface
     {
         return $this->requestBody;
@@ -537,10 +432,6 @@ class Request implements RequestInterface
      * If called twice, the call will return the already created sub request.
      * A sub request does not contain pagination and sorting from its parent.
      *
-     * @param string $relationship
-     * @param ResourceInterface|null $resource
-     * @param bool $keepFilters
-     * @return RequestInterface
      * @throws BadRequestException
      */
     public function createSubRequest(
@@ -572,7 +463,11 @@ class Request implements RequestInterface
             $subRequest = new self(
                 $this->method(),
                 $this->uri()
-                    ->withPath(($this->fileInPath ? '/' . $this->fileInPath : '') . ($this->apiPrefix ? '/' . $this->apiPrefix : '') . '/' . $type . '/' . $id . $relationshipPart)
+                    ->withPath(
+                        ($this->fileInPath ? '/' . $this->fileInPath : '') .
+                        ($this->apiPrefix ? '/' . $this->apiPrefix : '') .
+                        '/' . $type . '/' . $id . $relationshipPart
+                    )
                     ->withQuery(
                         http_build_query([
                             'fields' => $queryFields,

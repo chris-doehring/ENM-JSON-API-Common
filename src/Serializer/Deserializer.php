@@ -19,21 +19,20 @@ class Deserializer implements DocumentDeserializerInterface
     use JsonApiTrait;
 
     /**
-     * @param array $documentData
-     * @return DocumentInterface
-     * @throws \InvalidArgumentException|\RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function deserializeDocument(array $documentData): DocumentInterface
     {
         $data = $documentData['data'] ?? null;
 
-        if (!\is_array($data) || $this->isSingleResource($data)) {
+        if (!is_array($data) || $this->isSingleResource($data)) {
             $document = $this->singleResourceDocument();
         } else {
             $document = $this->multiResourceDocument();
         }
 
-        if (\is_array($data)) {
+        if (is_array($data)) {
             if ($this->isSingleResource($data)) {
                 $this->buildResource($document->data(), $data);
             } else {
@@ -54,7 +53,7 @@ class Deserializer implements DocumentDeserializerInterface
 
         $links = array_key_exists('links', $documentData) ? (array)$documentData['links'] : [];
         foreach ($links as $name => $link) {
-            $this->buildLink($document->links(), $name, \is_array($link) ? $link : ['href' => $link]);
+            $this->buildLink($document->links(), $name, is_array($link) ? $link : ['href' => $link]);
         }
 
         $included = array_key_exists('included', $documentData) ? (array)$documentData['included'] : [];
@@ -66,9 +65,6 @@ class Deserializer implements DocumentDeserializerInterface
     }
 
     /**
-     * @param ResourceCollectionInterface $collection
-     * @param array $resourceData
-     * @return ResourceInterface
      * @throws \InvalidArgumentException|\RuntimeException
      */
     protected function buildResource(ResourceCollectionInterface $collection, array $resourceData): ResourceInterface
@@ -91,7 +87,7 @@ class Deserializer implements DocumentDeserializerInterface
 
         $links = array_key_exists('links', $resourceData) ? (array)$resourceData['links'] : [];
         foreach ($links as $name => $link) {
-            $this->buildLink($resource->links(), $name, \is_array($link) ? $link : ['href' => $link]);
+            $this->buildLink($resource->links(), $name, is_array($link) ? $link : ['href' => $link]);
         }
 
         if (array_key_exists('meta', $resourceData)) {
@@ -101,10 +97,6 @@ class Deserializer implements DocumentDeserializerInterface
         return $resource;
     }
 
-    /**
-     * @param array $data
-     * @return ErrorInterface
-     */
     protected function buildError(array $data): ErrorInterface
     {
         $error = new Error(
@@ -126,10 +118,6 @@ class Deserializer implements DocumentDeserializerInterface
     }
 
     /**
-     * @param LinkCollectionInterface $collection
-     * @param string $name
-     * @param array $data
-     * @return void
      * @throws \InvalidArgumentException
      */
     protected function buildLink(LinkCollectionInterface $collection, string $name, array $data): void
@@ -149,20 +137,18 @@ class Deserializer implements DocumentDeserializerInterface
     }
 
     /**
-     * @param array $relationships
-     * @param ResourceInterface $resource
-     * @return void
-     * @throws \InvalidArgumentException|\RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     protected function buildResourceRelationships(array $relationships, ResourceInterface $resource): void
     {
         foreach ($relationships as $name => $relationship) {
             $related = $relationship['data'] ?? null;
 
-            if (!\is_array($related)) {
+            if (!is_array($related)) {
                 // empty to one relationship
                 $relationshipObject = $this->toOneRelationship($name);
-            } elseif (\count($related) > 0 && array_keys($related) !== range(0, \count($related) - 1)) {
+            } elseif (count($related) > 0 && array_keys($related) !== range(0, count($related) - 1)) {
                 // to one relationship
                 $relationshipObject = $this->toOneRelationship($name);
                 $this->buildResource($relationshipObject->related(), $related);
@@ -179,7 +165,7 @@ class Deserializer implements DocumentDeserializerInterface
                 $this->buildLink(
                     $relationshipObject->links(),
                     $linkName,
-                    \is_array($link) ? $link : ['href' => $link]
+                    is_array($link) ? $link : ['href' => $link]
                 );
             }
 
@@ -191,12 +177,8 @@ class Deserializer implements DocumentDeserializerInterface
         }
     }
 
-    /**
-     * @param array $data
-     * @return bool
-     */
     protected function isSingleResource(array $data): bool
     {
-        return \count($data) > 0 && array_keys($data) !== range(0, \count($data) - 1);
+        return count($data) > 0 && array_keys($data) !== range(0, count($data) - 1);
     }
 }

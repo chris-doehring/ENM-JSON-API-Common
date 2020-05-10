@@ -8,18 +8,11 @@ namespace Enm\JsonApi\Exception;
  */
 class ResourceNotFoundException extends JsonApiException
 {
-    /**
-     * @param string $type
-     * @param string $id
-     */
     public function __construct(string $type, string $id)
     {
         parent::__construct('Resource "' . $id . '" of type "' . $type . '" not found!');
     }
 
-    /**
-     * @return int
-     */
     public function getHttpStatus(): int
     {
         return 404;

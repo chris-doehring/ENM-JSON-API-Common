@@ -10,11 +10,6 @@ use Enm\JsonApi\Model\Common\AbstractCollection;
  */
 class ErrorCollection extends AbstractCollection implements ErrorCollectionInterface
 {
-    /**
-     * @param ErrorInterface $error
-     *
-     * @return ErrorCollectionInterface
-     */
     public function add(ErrorInterface $error): ErrorCollectionInterface
     {
         $this->collection[] = $error;

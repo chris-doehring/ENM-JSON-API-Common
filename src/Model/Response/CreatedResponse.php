@@ -12,16 +12,8 @@ use Enm\JsonApi\Model\Document\DocumentInterface;
  */
 class CreatedResponse extends AbstractResponse
 {
-    /**
-     * @var DocumentInterface|null
-     */
-    private $document;
+    private ?DocumentInterface $document;
 
-    /**
-     * @param string $location
-     * @param KeyValueCollectionInterface|null $headers
-     * @param DocumentInterface|null $document
-     */
     public function __construct(
         string $location,
         ?KeyValueCollectionInterface $headers = null,
@@ -32,9 +24,6 @@ class CreatedResponse extends AbstractResponse
         $this->document = $document;
     }
 
-    /**
-     * @return DocumentInterface|null
-     */
     public function document(): ?DocumentInterface
     {
         return $this->document;

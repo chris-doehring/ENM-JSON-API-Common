@@ -16,22 +16,13 @@ use Enm\JsonApi\Model\Resource\ResourceInterface;
  */
 class Serializer implements DocumentSerializerInterface
 {
-    /**
-     * @var bool
-     */
-    private $keepEmptyData;
+    private bool $keepEmptyData;
 
-    /**
-     * @param bool $keepEmptyData
-     */
     public function __construct(bool $keepEmptyData = false)
     {
         $this->keepEmptyData = $keepEmptyData;
     }
 
-    /**
-     * @return bool
-     */
     protected function shouldKeepEmptyData(): bool
     {
         return $this->keepEmptyData;
@@ -78,7 +69,7 @@ class Serializer implements DocumentSerializerInterface
             }
         }
 
-        // informations about json api
+        // information about json api
         $result['jsonapi'] = [
             'version' => '1.0'
         ];
@@ -158,7 +149,7 @@ class Serializer implements DocumentSerializerInterface
                 $data['data'] = $this->serializeResource($relationship->related()->first());
             }
         } // only add empty data if links or meta are not defined
-        elseif (\count($data) === 0 || $this->shouldKeepEmptyData()) {
+        elseif (count($data) === 0 || $this->shouldKeepEmptyData()) {
             if ($relationship->shouldBeHandledAsCollection()) {
                 $data['data'] = [];
             } else {
@@ -171,7 +162,6 @@ class Serializer implements DocumentSerializerInterface
 
     /**
      * @param LinkInterface $link
-     *
      * @return array|string
      */
     protected function serializeLink(LinkInterface $link)
@@ -186,11 +176,6 @@ class Serializer implements DocumentSerializerInterface
         return $link->href();
     }
 
-    /**
-     * @param ErrorInterface $error
-     *
-     * @return array
-     */
     protected function serializeError(ErrorInterface $error): array
     {
         $data = [
@@ -250,10 +235,6 @@ class Serializer implements DocumentSerializerInterface
         return $data;
     }
 
-    /**
-     * @param DocumentInterface $document
-     * @return bool
-     */
     protected function shouldContainData(DocumentInterface $document): bool
     {
         if (!$document->data()->isEmpty()) {

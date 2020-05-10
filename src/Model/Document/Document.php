@@ -13,47 +13,24 @@ use Enm\JsonApi\Model\Resource\ResourceCollection;
 use Enm\JsonApi\Model\Resource\ResourceCollectionInterface;
 use Enm\JsonApi\Model\Resource\ResourceInterface;
 use Enm\JsonApi\Model\Resource\SingleResourceCollection;
+use InvalidArgumentException;
 
 /**
  * @author Philipp Marien <marien@eosnewmedia.de>
  */
 class Document implements DocumentInterface
 {
-    /**
-     * @var bool
-     */
-    private $handleAsCollection = true;
-
-    /**
-     * @var ResourceCollectionInterface
-     */
-    private $data;
-
-    /**
-     * @var LinkCollection
-     */
-    private $links;
-
-    /**
-     * @var ResourceCollection
-     */
-    private $included;
-
-    /**
-     * @var KeyValueCollection
-     */
-    private $metaInformation;
-
-    /**
-     * @var ErrorCollection
-     */
-    private $errors;
-
+    private bool $handleAsCollection = true;
+    private ResourceCollectionInterface $data;
+    private LinkCollection $links;
+    private ResourceCollection $included;
+    private KeyValueCollection $metaInformation;
+    private ErrorCollection $errors;
 
     /**
      * @param ResourceCollectionInterface|ResourceInterface|ResourceInterface[]|null $data If data is not an array, "shouldBeHandledAsCollection" will return false
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct($data = null)
     {
@@ -62,10 +39,10 @@ class Document implements DocumentInterface
             $this->handleAsCollection = false;
         } elseif ($data instanceof ResourceCollectionInterface) {
             $this->data = $data;
-        } elseif (\is_array($data)) {
+        } elseif (is_array($data)) {
             $this->data = new ResourceCollection($data);
         } else {
-            throw new \InvalidArgumentException('Invalid data given!');
+            throw new InvalidArgumentException('Invalid data given!');
         }
 
         $this->links = new LinkCollection();
@@ -74,49 +51,31 @@ class Document implements DocumentInterface
         $this->errors = new ErrorCollection();
     }
 
-    /**
-     * @return bool
-     */
     public function shouldBeHandledAsCollection(): bool
     {
         return $this->handleAsCollection;
     }
 
-    /**
-     * @return ResourceCollectionInterface
-     */
     public function data(): ResourceCollectionInterface
     {
         return $this->data;
     }
 
-    /**
-     * @return LinkCollectionInterface
-     */
     public function links(): LinkCollectionInterface
     {
         return $this->links;
     }
 
-    /**
-     * @return ResourceCollectionInterface
-     */
     public function included(): ResourceCollectionInterface
     {
         return $this->included;
     }
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function metaInformation(): KeyValueCollectionInterface
     {
         return $this->metaInformation;
     }
 
-    /**
-     * @return ErrorCollectionInterface
-     */
     public function errors(): ErrorCollectionInterface
     {
         return $this->errors;

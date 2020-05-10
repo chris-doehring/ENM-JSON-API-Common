@@ -55,21 +55,17 @@ class KeyValueCollectionTest extends TestCase
         self::assertEquals('abc', $collection->createSubCollection('test')->getRequired('abc'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testCreateSubCollectionInvalid(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $collection = new KeyValueCollection(['test' => 'abc']);
 
         $collection->createSubCollection('test');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testCreateSubCollectionRequired(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $collection = new KeyValueCollection();
         $collection->createSubCollection('test');
     }
@@ -130,12 +126,9 @@ class KeyValueCollectionTest extends TestCase
         self::assertEquals('def', $collection->getRequired('test2'));
     }
 
-
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetInvalid(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $collection = new KeyValueCollection(['test' => 'test']);
         $collection->getRequired('abc');
     }

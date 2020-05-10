@@ -12,42 +12,21 @@ use Enm\JsonApi\Model\Resource\Relationship\RelationshipCollectionInterface;
  */
 interface ResourceInterface
 {
-    /**
-     * @return string
-     */
     public function type(): string;
 
-    /**
-     * @return string|null
-     */
     public function id(): ?string;
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function attributes(): KeyValueCollectionInterface;
 
-    /**
-     * @return RelationshipCollectionInterface
-     */
     public function relationships(): RelationshipCollectionInterface;
 
-    /**
-     * @return LinkCollectionInterface
-     */
     public function links(): LinkCollectionInterface;
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function metaInformation(): KeyValueCollectionInterface;
 
     /**
      * Creates a new resource containing all data from the current one.
      * If set, the new resource will have the given id.
-     *
-     * @param string $id
-     * @return ResourceInterface
      */
     public function duplicate(string $id = null): ResourceInterface;
 }

@@ -31,21 +31,12 @@ class RelationshipCollection extends AbstractCollection implements RelationshipC
         return array_values(parent::all());
     }
 
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function has(string $name): bool
     {
         return array_key_exists($name, $this->collection);
     }
 
     /**
-     * @param string $name
-     *
-     * @return RelationshipInterface
      * @throws \InvalidArgumentException
      */
     public function get(string $name): RelationshipInterface
@@ -57,11 +48,6 @@ class RelationshipCollection extends AbstractCollection implements RelationshipC
         return $this->collection[$name];
     }
 
-    /**
-     * @param RelationshipInterface $relationship
-     *
-     * @return RelationshipCollectionInterface
-     */
     public function set(RelationshipInterface $relationship): RelationshipCollectionInterface
     {
         $this->collection[$relationship->name()] = $relationship;
@@ -69,11 +55,6 @@ class RelationshipCollection extends AbstractCollection implements RelationshipC
         return $this;
     }
 
-    /**
-     * @param RelationshipInterface $relationship
-     * @param bool $replaceExistingValues
-     * @return RelationshipCollectionInterface
-     */
     public function merge(
         RelationshipInterface $relationship,
         bool $replaceExistingValues = false
@@ -100,10 +81,6 @@ class RelationshipCollection extends AbstractCollection implements RelationshipC
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @return RelationshipCollectionInterface
-     */
     public function remove(string $name): RelationshipCollectionInterface
     {
         if ($this->has($name)) {
@@ -113,11 +90,6 @@ class RelationshipCollection extends AbstractCollection implements RelationshipC
         return $this;
     }
 
-    /**
-     * @param RelationshipInterface $relationship
-     *
-     * @return RelationshipCollectionInterface
-     */
     public function removeElement(RelationshipInterface $relationship): RelationshipCollectionInterface
     {
         $this->remove($relationship->name());

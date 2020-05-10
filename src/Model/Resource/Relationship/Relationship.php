@@ -17,30 +17,11 @@ use Enm\JsonApi\Model\Resource\SingleResourceCollection;
  */
 class Relationship implements RelationshipInterface
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var ResourceCollectionInterface
-     */
-    private $related;
-
-    /**
-     * @var bool
-     */
-    private $handleAsCollection = true;
-
-    /**
-     * @var LinkCollection
-     */
-    private $links;
-
-    /**
-     * @var KeyValueCollection
-     */
-    private $metaInformation;
+    private string $name;
+    private ResourceCollectionInterface $related;
+    private bool $handleAsCollection = true;
+    private LinkCollection $links;
+    private KeyValueCollection $metaInformation;
 
     /**
      * @param string $name
@@ -70,49 +51,32 @@ class Relationship implements RelationshipInterface
         $this->metaInformation = new KeyValueCollection();
     }
 
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return bool
-     */
     public function shouldBeHandledAsCollection(): bool
     {
         return $this->handleAsCollection;
     }
 
-    /**
-     * @return LinkCollectionInterface
-     */
     public function links(): LinkCollectionInterface
     {
         return $this->links;
     }
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function metaInformation(): KeyValueCollectionInterface
     {
         return $this->metaInformation;
     }
 
-    /**
-     * @return ResourceCollectionInterface
-     */
     public function related(): ResourceCollectionInterface
     {
         return $this->related;
     }
 
     /**
-     * @param null|string $name
-     * @return RelationshipInterface
      * @throws \InvalidArgumentException
      */
     public function duplicate(string $name = null): RelationshipInterface

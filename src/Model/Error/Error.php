@@ -12,42 +12,13 @@ use Enm\JsonApi\Model\Common\KeyValueCollectionInterface;
  */
 class Error implements ErrorInterface
 {
-    /**
-     * @var int
-     */
-    private $status;
+    private int $status;
+    private string $title;
+    private string $detail;
+    private string $code;
+    private KeyValueCollection $metaCollection;
+    private KeyValueCollection $source;
 
-    /**
-     * @var string
-     */
-    private $title;
-
-    /**
-     * @var string
-     */
-    private $detail;
-
-    /**
-     * @var string
-     */
-    private $code;
-
-    /**
-     * @var KeyValueCollection
-     */
-    private $metaCollection;
-    
-    /**
-     * @var KeyValueCollection
-     */
-    private $source;
-
-    /**
-     * @param int $status
-     * @param string $title
-     * @param string $detail
-     * @param string $code
-     */
     public function __construct(int $status, string $title, string $detail = '', string $code = '')
     {
         $this->status = $status;
@@ -59,11 +30,6 @@ class Error implements ErrorInterface
         $this->source = new KeyValueCollection();
     }
 
-    /**
-     * @param \Exception|\Throwable $throwable
-     * @param bool $debug
-     * @return ErrorInterface
-     */
     public static function createFrom(\Throwable $throwable, $debug = false): ErrorInterface
     {
         $status = 500;
@@ -91,49 +57,31 @@ class Error implements ErrorInterface
         return $error;
     }
 
-    /**
-     * @return int
-     */
     public function status(): int
     {
         return $this->status;
     }
 
-    /**
-     * @return string
-     */
     public function code(): string
     {
         return $this->code;
     }
 
-    /**
-     * @return string
-     */
     public function title(): string
     {
         return $this->title;
     }
 
-    /**
-     * @return string
-     */
     public function detail(): string
     {
         return $this->detail;
     }
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function metaInformation(): KeyValueCollectionInterface
     {
         return $this->metaCollection;
     }
-    
-    /**
-     * @return KeyValueCollectionInterface
-     */
+
     public function source(): KeyValueCollectionInterface
     {
         return $this->source;

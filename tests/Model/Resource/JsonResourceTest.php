@@ -51,11 +51,9 @@ class JsonResourceTest extends TestCase
         self::assertNotSame($resource->relationships()->get('test'), $duplicate->relationships()->get('test'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testJsonResourceEmptyType(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         new JsonResource('', '1');
     }
 }

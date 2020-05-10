@@ -9,6 +9,7 @@ use Enm\JsonApi\Model\Resource\JsonResource;
 use Enm\JsonApi\Model\Resource\Relationship\Relationship;
 use Enm\JsonApi\Model\Resource\Relationship\RelationshipInterface;
 use Enm\JsonApi\Model\Resource\ResourceInterface;
+use InvalidArgumentException;
 
 /**
  * @author Philipp Marien <marien@eosnewmedia.de>
@@ -16,18 +17,15 @@ use Enm\JsonApi\Model\Resource\ResourceInterface;
 trait JsonApiTrait
 {
     /**
-     * @param string $type
-     * @param string|null $id
-     * @return ResourceInterface
+     * @throws InvalidArgumentException
      */
-    protected function resource(string $type, ?string $id = null): ResourceInterface
+    protected function resource(string $type, ?string $id = null, array $attributes = []): ResourceInterface
     {
-        return new JsonResource($type, $id);
+        return new JsonResource($type, $id, $attributes);
     }
 
     /**
-     * @param ResourceInterface|null $resource
-     * @return DocumentInterface
+     * @throws InvalidArgumentException
      */
     protected function singleResourceDocument(ResourceInterface $resource = null): DocumentInterface
     {
@@ -37,6 +35,7 @@ trait JsonApiTrait
     /**
      * @param ResourceInterface[] $resource
      * @return DocumentInterface
+     * @throws InvalidArgumentException
      */
     protected function multiResourceDocument(array $resource = []): DocumentInterface
     {
@@ -44,9 +43,7 @@ trait JsonApiTrait
     }
 
     /**
-     * @param string $name
-     * @param ResourceInterface|null $related
-     * @return RelationshipInterface
+     * @throws InvalidArgumentException
      */
     protected function toOneRelationship(string $name, ResourceInterface $related = null): RelationshipInterface
     {
@@ -55,8 +52,9 @@ trait JsonApiTrait
 
     /**
      * @param string $name
-     * @param array|ResourceInterface[] $related
+     * @param ResourceInterface[] $related
      * @return RelationshipInterface
+     * @throws InvalidArgumentException
      */
     protected function toManyRelationship(string $name, array $related = []): RelationshipInterface
     {

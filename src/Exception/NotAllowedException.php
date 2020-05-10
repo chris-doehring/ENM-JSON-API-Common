@@ -8,9 +8,6 @@ namespace Enm\JsonApi\Exception;
  */
 class NotAllowedException extends JsonApiException
 {
-    /**
-     * @return int
-     */
     public function getHttpStatus(): int
     {
         return 403;

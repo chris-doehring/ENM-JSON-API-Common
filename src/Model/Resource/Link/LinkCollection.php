@@ -29,20 +29,12 @@ class LinkCollection extends AbstractCollection implements LinkCollectionInterfa
         return array_values(parent::all());
     }
 
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
     public function has(string $name): bool
     {
         return array_key_exists($name, $this->collection);
     }
 
     /**
-     * @param string $name
-     *
-     * @return LinkInterface
      * @throws \InvalidArgumentException
      */
     public function get(string $name): LinkInterface
@@ -54,11 +46,6 @@ class LinkCollection extends AbstractCollection implements LinkCollectionInterfa
         return $this->collection[$name];
     }
 
-    /**
-     * @param LinkInterface $link
-     *
-     * @return LinkCollectionInterface
-     */
     public function set(LinkInterface $link): LinkCollectionInterface
     {
         $this->collection[$link->name()] = $link;
@@ -66,11 +53,6 @@ class LinkCollection extends AbstractCollection implements LinkCollectionInterfa
         return $this;
     }
 
-    /**
-     * @param LinkInterface $link
-     * @param bool $replaceExistingValues
-     * @return LinkCollectionInterface
-     */
     public function merge(LinkInterface $link, bool $replaceExistingValues = false): LinkCollectionInterface
     {
         try {
@@ -90,10 +72,6 @@ class LinkCollection extends AbstractCollection implements LinkCollectionInterfa
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @return LinkCollectionInterface
-     */
     public function remove(string $name): LinkCollectionInterface
     {
         if ($this->has($name)) {
@@ -103,11 +81,6 @@ class LinkCollection extends AbstractCollection implements LinkCollectionInterfa
         return $this;
     }
 
-    /**
-     * @param LinkInterface $link
-     *
-     * @return LinkCollectionInterface
-     */
     public function removeElement(LinkInterface $link): LinkCollectionInterface
     {
         $this->remove($link->name());
@@ -116,9 +89,6 @@ class LinkCollection extends AbstractCollection implements LinkCollectionInterfa
     }
 
     /**
-     * @param string $name
-     * @param string $href
-     * @return LinkCollectionInterface
      * @throws \InvalidArgumentException
      */
     public function createLink(string $name, string $href): LinkCollectionInterface

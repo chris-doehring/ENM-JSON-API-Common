@@ -11,18 +11,7 @@ use Enm\JsonApi\Model\Document\DocumentInterface;
  */
 interface ResponseInterface
 {
-    /**
-     * @return int
-     */
     public function status(): int;
-
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function headers(): KeyValueCollectionInterface;
-
-    /**
-     * @return DocumentInterface|null
-     */
     public function document(): ?DocumentInterface;
 }

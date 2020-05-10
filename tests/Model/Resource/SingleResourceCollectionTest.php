@@ -26,11 +26,9 @@ class SingleResourceCollectionTest extends TestCase
         self::assertCount(1, $collection);
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testConstructMultiple(): void
     {
+        $this->expectException(\LogicException::class);
         new SingleResourceCollection(
             [
                 $this->createMock(ResourceInterface::class),
@@ -39,11 +37,9 @@ class SingleResourceCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testSetMultiple(): void
     {
+        $this->expectException(\LogicException::class);
         $collection = new SingleResourceCollection();
         /** @var ResourceInterface $resource */
         $resource = $this->createMock(ResourceInterface::class);

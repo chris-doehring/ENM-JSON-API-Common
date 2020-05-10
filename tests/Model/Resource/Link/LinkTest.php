@@ -32,19 +32,15 @@ class LinkTest extends TestCase
         self::assertEquals('test', $link->duplicate('test')->name());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExceptionOnInvalidName(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Link('', 'http://jsonapi.org');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testExceptionOnInvalidUrl(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         new Link('about', 'jsonapi.org');
     }
 

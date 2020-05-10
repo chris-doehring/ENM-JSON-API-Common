@@ -11,15 +11,10 @@ use Enm\JsonApi\Model\Common\KeyValueCollectionInterface;
  */
 trait RelatedMetaInformationTrait
 {
-    /**
-     * @var KeyValueCollectionInterface
-     */
-    protected $relatedMetaInformation;
+    protected ?KeyValueCollectionInterface $relatedMetaInformation = null;
 
     /**
      * This method provides additional meta information for a resource identifier object in the context of relationship data
-     *
-     * @return KeyValueCollectionInterface
      */
     public function relatedMetaInformation(): KeyValueCollectionInterface
     {

@@ -8,9 +8,6 @@ namespace Enm\JsonApi\Exception;
  */
 class BadRequestException extends JsonApiException
 {
-    /**
-     * @param string $message
-     */
     public function __construct(string $message = '')
     {
         if ($message === '') {
@@ -19,9 +16,6 @@ class BadRequestException extends JsonApiException
         parent::__construct($message);
     }
 
-    /**
-     * @return int
-     */
     public function getHttpStatus(): int
     {
         return 400;

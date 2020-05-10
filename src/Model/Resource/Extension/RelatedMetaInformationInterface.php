@@ -12,8 +12,6 @@ interface RelatedMetaInformationInterface
 {
     /**
      * This method provides additional meta information for a resource identifier object in the context of relationship data
-     *
-     * @return KeyValueCollectionInterface
      */
     public function relatedMetaInformation(): KeyValueCollectionInterface;
 }

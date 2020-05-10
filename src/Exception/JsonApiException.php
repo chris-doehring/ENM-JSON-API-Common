@@ -13,8 +13,7 @@ use Throwable;
  */
 class JsonApiException extends \Exception
 {
-    /** @var ErrorCollectionInterface */
-    protected $errorCollection;
+    protected ErrorCollectionInterface $errorCollection;
 
     public function __construct(
         $message = "",
@@ -29,9 +28,6 @@ class JsonApiException extends \Exception
         );
     }
 
-    /**
-     * @return int
-     */
     public function getHttpStatus(): int
     {
         return 500;

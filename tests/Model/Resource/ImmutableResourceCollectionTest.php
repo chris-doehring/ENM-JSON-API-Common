@@ -12,31 +12,25 @@ use PHPUnit\Framework\TestCase;
  */
 class ImmutableResourceCollectionTest extends TestCase
 {
-    /**
-     * @expectedException \LogicException
-     */
     public function testSet(): void
     {
+        $this->expectException(\LogicException::class);
         $collection = new ImmutableResourceCollection();
         /** @var ResourceInterface $resource */
         $resource = $this->createMock(ResourceInterface::class);
         $collection->set($resource);
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testRemove(): void
     {
+        $this->expectException(\LogicException::class);
         $collection = new ImmutableResourceCollection();
         $collection->remove('test', '1');
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testRemoveElement(): void
     {
+        $this->expectException(\LogicException::class);
         $collection = new ImmutableResourceCollection();
         /** @var ResourceInterface $resource */
         $resource = $this->createMock(ResourceInterface::class);

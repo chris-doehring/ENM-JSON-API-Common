@@ -14,16 +14,8 @@ interface ErrorCollectionInterface extends CollectionInterface
      * @return ErrorInterface[]
      */
     public function all(): array;
-    
-    /**
-     * @param ErrorInterface $error
-     *
-     * @return ErrorCollectionInterface
-     */
+
     public function add(ErrorInterface $error): ErrorCollectionInterface;
 
-    /**
-     * @return ErrorInterface|null
-     */
     public function first(): ?ErrorInterface;
 }

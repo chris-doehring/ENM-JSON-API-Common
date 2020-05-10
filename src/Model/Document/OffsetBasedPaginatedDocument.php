@@ -18,12 +18,6 @@ class OffsetBasedPaginatedDocument extends Document
     private const OFFSET = 'offset';
     private const LIMIT = 'limit';
 
-    /**
-     * @param array $data
-     * @param UriInterface $requestUri
-     * @param int $resultCount
-     * @param int $defaultLimit
-     */
     public function __construct(array $data, UriInterface $requestUri, int $resultCount, int $defaultLimit)
     {
         parent::__construct($data);
@@ -80,12 +74,6 @@ class OffsetBasedPaginatedDocument extends Document
         }
     }
 
-    /**
-     * @param UriInterface $uri
-     * @param int $offset
-     * @param int $limit
-     * @return string
-     */
     protected function createPaginatedUri(UriInterface $uri, int $offset, int $limit): string
     {
         parse_str($uri->getQuery(), $query);

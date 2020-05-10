@@ -32,22 +32,12 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
         return array_values(parent::all());
     }
 
-    /**
-     * @param string $type
-     * @param string $id
-     *
-     * @return bool
-     */
     public function has(string $type, string $id): bool
     {
         return array_key_exists($this->buildArrayKey($type, $id), $this->collection);
     }
 
     /**
-     * @param string $type
-     * @param string $id
-     *
-     * @return ResourceInterface
      * @throws ResourceNotFoundException
      */
     public function get(string $type, string $id): ResourceInterface
@@ -60,8 +50,6 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
     }
 
     /**
-     * @param string $type
-     * @return ResourceInterface
      * @throws \LogicException
      */
     public function first(string $type = null): ResourceInterface
@@ -79,11 +67,6 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
         throw new \LogicException('Collection does not contain any resources of type ' . $type . '!');
     }
 
-    /**
-     * @param ResourceInterface $resource
-     *
-     * @return ResourceCollectionInterface
-     */
     public function set(ResourceInterface $resource): ResourceCollectionInterface
     {
         $this->collection[$this->buildArrayKey($resource->type(), $resource->id() ?? spl_object_hash($resource))] = $resource;
@@ -91,11 +74,6 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
         return $this;
     }
 
-    /**
-     * @param ResourceInterface $resource
-     * @param bool $replaceExistingValues
-     * @return ResourceCollectionInterface
-     */
     public function merge(ResourceInterface $resource, bool $replaceExistingValues = false): ResourceCollectionInterface
     {
         try {
@@ -121,11 +99,6 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
         return $this;
     }
 
-    /**
-     * @param string $type
-     * @param string $id
-     * @return ResourceCollectionInterface
-     */
     public function remove(string $type, string $id): ResourceCollectionInterface
     {
         if ($this->has($type, $id)) {
@@ -135,11 +108,6 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
         return $this;
     }
 
-    /**
-     * @param ResourceInterface $resource
-     *
-     * @return ResourceCollectionInterface
-     */
     public function removeElement(ResourceInterface $resource): ResourceCollectionInterface
     {
         $this->remove($resource->type(), $resource->id() ?? spl_object_hash($resource));
@@ -147,11 +115,6 @@ class ResourceCollection extends AbstractCollection implements ResourceCollectio
         return $this;
     }
 
-    /**
-     * @param string $type
-     * @param string $id
-     * @return string
-     */
     private function buildArrayKey(string $type, string $id): string
     {
         return $type . '::' . $id;

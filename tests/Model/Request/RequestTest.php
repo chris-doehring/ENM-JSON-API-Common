@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Enm\JsonApi\Tests\Model\Request;
 
+use Enm\JsonApi\Exception\BadRequestException;
 use Enm\JsonApi\Model\Request\Request;
 use GuzzleHttp\Psr7\Uri;
 use PHPUnit\Framework\TestCase;
@@ -45,11 +46,9 @@ class RequestTest extends TestCase
         self::assertEquals('10', $request->paginationValue('limit'));
     }
 
-    /**
-     * @expectedException \Enm\JsonApi\Exception\BadRequestException
-     */
     public function testRequestInvalidType(): void
     {
+        $this->expectException(BadRequestException::class);
         new Request(
             'GET',
             new Uri('/index.php/api'),

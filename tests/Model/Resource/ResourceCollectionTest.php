@@ -45,11 +45,9 @@ class ResourceCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testFirstEmptyCollection(): void
     {
+        $this->expectException(\LogicException::class);
         $collection = new ResourceCollection();
         self::assertInstanceOf(
             ResourceInterface::class,
@@ -57,11 +55,9 @@ class ResourceCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testFirstMissingType(): void
     {
+        $this->expectException(\LogicException::class);
         $collection = new ResourceCollection($this->getResources());
         self::assertInstanceOf(
             ResourceInterface::class,
@@ -69,11 +65,9 @@ class ResourceCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Enm\JsonApi\Exception\ResourceNotFoundException
-     */
     public function testGetInvalid(): void
     {
+        $this->expectException(ResourceNotFoundException::class);
         $collection = new ResourceCollection($this->getResources());
         $collection->get('test', '3');
     }

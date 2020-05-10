@@ -8,18 +8,9 @@ namespace Enm\JsonApi\Model\Common;
  */
 interface CollectionInterface extends \Countable
 {
-    /**
-     * @return array
-     */
     public function all(): array;
 
-    /**
-     * @return bool
-     */
     public function isEmpty(): bool;
 
-    /**
-     * @return int
-     */
     public function count(): int;
 }

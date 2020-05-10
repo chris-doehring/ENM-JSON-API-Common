@@ -11,20 +11,9 @@ use Enm\JsonApi\Model\JsonApi;
  */
 abstract class AbstractResponse implements ResponseInterface
 {
-    /**
-     * @var int
-     */
-    private $status;
+    private int $status;
+    private KeyValueCollectionInterface $headers;
 
-    /**
-     * @var KeyValueCollectionInterface
-     */
-    private $headers;
-
-    /**
-     * @param int $status
-     * @param KeyValueCollectionInterface $headers
-     */
     public function __construct(int $status, KeyValueCollectionInterface $headers)
     {
         $this->status = $status;
@@ -32,17 +21,11 @@ abstract class AbstractResponse implements ResponseInterface
         $this->headers->set('Content-Type', JsonApi::CONTENT_TYPE);
     }
 
-    /**
-     * @return int
-     */
     public function status(): int
     {
         return $this->status;
     }
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function headers(): KeyValueCollectionInterface
     {
         return $this->headers;

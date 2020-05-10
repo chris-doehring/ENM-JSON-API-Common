@@ -3,16 +3,12 @@ declare(strict_types=1);
 
 namespace Enm\JsonApi\Model\Resource;
 
-
 /**
  * @author Philipp Marien <marien@eosnewmedia.de>
  */
 class SingleResourceCollection extends ResourceCollection
 {
     /**
-     * @param ResourceInterface $resource
-     *
-     * @return ResourceCollectionInterface
      * @throws \LogicException
      */
     public function set(ResourceInterface $resource): ResourceCollectionInterface

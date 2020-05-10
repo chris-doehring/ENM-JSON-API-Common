@@ -10,9 +10,5 @@ use Enm\JsonApi\Model\Document\DocumentInterface;
  */
 interface DocumentDeserializerInterface
 {
-    /**
-     * @param array $documentData
-     * @return DocumentInterface
-     */
     public function deserializeDocument(array $documentData): DocumentInterface;
 }

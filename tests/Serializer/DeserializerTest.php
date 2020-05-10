@@ -69,11 +69,9 @@ class DeserializerTest extends TestCase
         self::assertTrue($document->data()->first()->relationships()->get('children')->shouldBeHandledAsCollection());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidLink(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->createDeserializer()->deserializeDocument(
             [
                 'data' => [
@@ -87,11 +85,9 @@ class DeserializerTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidResource(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->createDeserializer()->deserializeDocument(
             [
                 'data' => [

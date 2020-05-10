@@ -10,33 +10,15 @@ use Enm\JsonApi\Model\Common\KeyValueCollectionInterface;
  */
 interface ErrorInterface
 {
-    /**
-     * @return int
-     */
     public function status(): int;
 
-    /**
-     * @return string
-     */
     public function code(): string;
 
-    /**
-     * @return string
-     */
     public function title(): string;
 
-    /**
-     * @return string
-     */
     public function detail(): string;
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function metaInformation(): KeyValueCollectionInterface;
-    
-    /**
-     * @return KeyValueCollectionInterface
-     */
+
     public function source(): KeyValueCollectionInterface;
 }

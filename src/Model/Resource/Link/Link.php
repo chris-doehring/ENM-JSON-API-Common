@@ -11,14 +11,11 @@ use Enm\JsonApi\Model\Common\KeyValueCollectionInterface;
  */
 class Link implements LinkInterface
 {
-    private $name;
-    private $href;
-    private $metaInformation;
+    private string $name;
+    private string $href;
+    private KeyValueCollection $metaInformation;
 
     /**
-     * @param string $name
-     * @param string $href
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(string $name, string $href)
@@ -44,26 +41,16 @@ class Link implements LinkInterface
         $this->metaInformation = new KeyValueCollection();
     }
 
-
-    /**
-     * @return string
-     */
     public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function href(): string
     {
         return $this->href;
     }
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function metaInformation(): KeyValueCollectionInterface
     {
         return $this->metaInformation;
@@ -73,8 +60,6 @@ class Link implements LinkInterface
      * Creates a new link containing all data from the current one.
      * If set, the new link will have the given name.
      *
-     * @param string|null $name
-     * @return LinkInterface
      * @throws \InvalidArgumentException
      */
     public function duplicate(string $name = null): LinkInterface

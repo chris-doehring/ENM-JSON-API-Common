@@ -25,11 +25,9 @@ class LinkCollectionTest extends TestCase
         self::assertInstanceOf(LinkInterface::class, $collection->get('a'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetInvalid(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $collection = new LinkCollection($this->getLinks());
         $collection->get('c');
     }

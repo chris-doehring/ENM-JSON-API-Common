@@ -12,17 +12,11 @@ use Enm\JsonApi\Model\Document\DocumentInterface;
  */
 class AcceptedResponse extends AbstractResponse
 {
-    /**
-     * @param KeyValueCollectionInterface|null $headers
-     */
     public function __construct(?KeyValueCollectionInterface $headers = null)
     {
         parent::__construct(202, $headers ?? new KeyValueCollection());
     }
 
-    /**
-     * @return DocumentInterface|null
-     */
     public function document(): ?DocumentInterface
     {
         return null;

@@ -19,41 +19,14 @@ class JsonResource implements ResourceInterface, RelatedMetaInformationInterface
 {
     use RelatedMetaInformationTrait;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
+    protected ?string $id;
+    protected KeyValueCollection $attributeCollection;
+    protected RelationshipCollection $relationshipCollection;
+    protected LinkCollection $linkCollection;
+    protected KeyValueCollection $metaCollection;
 
     /**
-     * @var string|null
-     */
-    protected $id;
-
-    /**
-     * @var KeyValueCollection
-     */
-    protected $attributeCollection;
-
-    /**
-     * @var RelationshipCollection
-     */
-    protected $relationshipCollection;
-
-    /**
-     * @var LinkCollection
-     */
-    protected $linkCollection;
-
-    /**
-     * @var KeyValueCollection
-     */
-    protected $metaCollection;
-
-    /**
-     * @param string $type
-     * @param string|null $id
-     * @param array $attributes
-     *
      * @throws \InvalidArgumentException
      */
     public function __construct(string $type, ?string $id = null, array $attributes = [])
@@ -70,50 +43,31 @@ class JsonResource implements ResourceInterface, RelatedMetaInformationInterface
         $this->metaCollection = new KeyValueCollection();
     }
 
-
-    /**
-     * @return string
-     */
     public function type(): string
     {
         return $this->type;
     }
 
-    /**
-     * @return string|null
-     */
     public function id(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function attributes(): KeyValueCollectionInterface
     {
         return $this->attributeCollection;
     }
 
-    /**
-     * @return RelationshipCollectionInterface
-     */
     public function relationships(): RelationshipCollectionInterface
     {
         return $this->relationshipCollection;
     }
 
-    /**
-     * @return LinkCollectionInterface
-     */
     public function links(): LinkCollectionInterface
     {
         return $this->linkCollection;
     }
 
-    /**
-     * @return KeyValueCollectionInterface
-     */
     public function metaInformation(): KeyValueCollectionInterface
     {
         return $this->metaCollection;
@@ -123,8 +77,6 @@ class JsonResource implements ResourceInterface, RelatedMetaInformationInterface
      * Creates a new resource containing all data from the current one.
      * If set, the new request will have the given id.
      *
-     * @param string $id
-     * @return ResourceInterface
      * @throws \InvalidArgumentException
      */
     public function duplicate(string $id = null): ResourceInterface

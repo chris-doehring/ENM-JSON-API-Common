@@ -9,9 +9,6 @@ namespace Enm\JsonApi\Model\Resource;
 class ImmutableResourceCollection extends ResourceCollection
 {
     /**
-     * @param ResourceInterface $resource
-     *
-     * @return ResourceCollectionInterface
      * @throws \LogicException
      */
     public function set(ResourceInterface $resource): ResourceCollectionInterface
@@ -20,9 +17,6 @@ class ImmutableResourceCollection extends ResourceCollection
     }
 
     /**
-     * @param string $type
-     * @param string $id
-     * @return ResourceCollectionInterface
      * @throws \LogicException
      */
     public function remove(string $type, string $id): ResourceCollectionInterface
@@ -31,9 +25,6 @@ class ImmutableResourceCollection extends ResourceCollection
     }
 
     /**
-     * @param ResourceInterface $resource
-     *
-     * @return ResourceCollectionInterface
      * @throws \LogicException
      */
     public function removeElement(ResourceInterface $resource): ResourceCollectionInterface

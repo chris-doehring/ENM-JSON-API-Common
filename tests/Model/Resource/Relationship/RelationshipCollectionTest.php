@@ -30,11 +30,9 @@ class RelationshipCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetInvalid(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $collection = new RelationshipCollection($this->getResources());
         $collection->get('test');
     }

@@ -8,14 +8,8 @@ namespace Enm\JsonApi\Model\Common;
  */
 class KeyValueCollection extends AbstractCollection implements KeyValueCollectionInterface
 {
-    /**
-     * @var array
-     */
-    private $keyMap = [];
+    private array $keyMap = [];
 
-    /**
-     * @param array $data
-     */
     public function __construct(array $data = [])
     {
         parent::__construct();
@@ -24,11 +18,6 @@ class KeyValueCollection extends AbstractCollection implements KeyValueCollectio
         }
     }
 
-    /**
-     * @param string $key
-     *
-     * @return bool
-     */
     public function has(string $key): bool
     {
         return array_key_exists(strtolower($key), $this->keyMap) &&
@@ -36,9 +25,6 @@ class KeyValueCollection extends AbstractCollection implements KeyValueCollectio
     }
 
     /**
-     * @param string $key
-     *
-     * @return mixed
      * @throws \InvalidArgumentException
      */
     public function getRequired(string $key)
@@ -50,11 +36,6 @@ class KeyValueCollection extends AbstractCollection implements KeyValueCollectio
         return $this->collection[$this->keyMap[strtolower($key)]];
     }
 
-    /**
-     * @param string $key
-     * @param mixed $defaultValue
-     * @return mixed
-     */
     public function getOptional(string $key, $defaultValue = null)
     {
         return $this->has($key) ? $this->collection[$this->keyMap[strtolower($key)]] : $defaultValue;
@@ -64,26 +45,18 @@ class KeyValueCollection extends AbstractCollection implements KeyValueCollectio
      * Returns a (sub) collection for an array value from the current collection.
      * If the same sub collection is requested multiple times, each time the same object must be returned
      *
-     * @param string $key
-     * @param bool $required
-     * @return KeyValueCollectionInterface
      * @throws \InvalidArgumentException
      */
     public function createSubCollection(string $key, bool $required = true): KeyValueCollectionInterface
     {
         $data = $required ? $this->getRequired($key) : $this->getOptional($key, []);
-        if (!\is_array($data)) {
+        if (!is_array($data)) {
             throw new \InvalidArgumentException('Element ' . $key . ' have to be an array to use it as collection.');
         }
 
         return new self($data);
     }
 
-    /**
-     * @param array $data
-     * @param bool $overwrite
-     * @return KeyValueCollectionInterface
-     */
     public function merge(array $data, bool $overwrite = true): KeyValueCollectionInterface
     {
         foreach ($data as $key => $value) {
@@ -95,11 +68,6 @@ class KeyValueCollection extends AbstractCollection implements KeyValueCollectio
         return $this;
     }
 
-    /**
-     * @param KeyValueCollectionInterface $collection
-     * @param bool $overwrite
-     * @return KeyValueCollectionInterface
-     */
     public function mergeCollection(
         KeyValueCollectionInterface $collection,
         bool $overwrite = true
@@ -109,12 +77,6 @@ class KeyValueCollection extends AbstractCollection implements KeyValueCollectio
         return $this;
     }
 
-    /**
-     * @param string $key
-     * @param mixed $value
-     *
-     * @return KeyValueCollectionInterface
-     */
     public function set(string $key, $value): KeyValueCollectionInterface
     {
         $this->keyMap[strtolower($key)] = $key;
@@ -126,11 +88,6 @@ class KeyValueCollection extends AbstractCollection implements KeyValueCollectio
         return $this;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return KeyValueCollectionInterface
-     */
     public function remove(string $key): KeyValueCollectionInterface
     {
         if ($this->has($key)) {
