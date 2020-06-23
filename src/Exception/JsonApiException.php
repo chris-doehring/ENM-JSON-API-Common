@@ -24,9 +24,12 @@ class JsonApiException extends \Exception
     ) {
         parent::__construct($message, $code, $previous);
         $this->errorCollection = $errors ?? new ErrorCollection();
-        $this->errorCollection->add(
-            Error::createFrom($this)
-        );
+
+        if ($this->errorCollection->isEmpty()) {
+            $this->errorCollection->add(
+                Error::createFrom($this)
+            );
+        }
     }
 
     /**

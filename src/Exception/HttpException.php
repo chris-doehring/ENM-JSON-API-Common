@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Enm\JsonApi\Exception;
 
+use Enm\JsonApi\Model\Error\ErrorCollectionInterface;
+use Throwable;
 
 /**
  * @author Philipp Marien <marien@eosnewmedia.de>
@@ -14,16 +16,15 @@ class HttpException extends JsonApiException
      */
     private $statusCode;
 
-    /**
-     * @param int $statusCode
-     * @param string $message
-     * @param int $code
-     * @param \Throwable|null $previous
-     */
-    public function __construct(int $statusCode, string $message = '', $code = 0, \Throwable $previous = null)
-    {
+    public function __construct(
+        int $statusCode,
+        string $message = '',
+        $code = 0,
+        Throwable $previous = null,
+        ErrorCollectionInterface $errors = null
+    ) {
         $this->statusCode = $statusCode;
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $previous, $errors);
     }
 
     /**
