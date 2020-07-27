@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Enm\JsonApi\Exception;
 
-
 /**
  * @author Philipp Marien <marien@eosnewmedia.de>
  */

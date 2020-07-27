@@ -16,8 +16,8 @@ class JsonApiException extends \Exception
     protected ErrorCollectionInterface $errorCollection;
 
     public function __construct(
-        $message = "",
-        $code = 0,
+        string $message = '',
+        int $code = 0,
         Throwable $previous = null,
         ErrorCollectionInterface $errors = null
     ) {
