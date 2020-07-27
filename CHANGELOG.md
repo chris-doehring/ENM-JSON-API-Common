@@ -1,6 +1,6 @@
 # Changelog
 ## 5.0.0
-1. Change the minimum php version to `^7.4` and implement the new php features
+1. Change the minimum php version to `^7.4` and implement typed properties
 1. Remove unnecessary phpdocs comments
 1. Remove the object mapper feature
 1. Remove deprecated relationship and resource specific requests
