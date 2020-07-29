@@ -74,7 +74,7 @@ class Deserializer implements DocumentDeserializerInterface
         }
 
         $type = (string)$resourceData['type'];
-        $id = array_key_exists('id', $resourceData) ? (string)$resourceData['id'] : '';
+        $id = array_key_exists('id', $resourceData) ? (string)$resourceData['id'] : null;
         $resource = $this->resource($type, $id);
         $collection->set($resource);
 
