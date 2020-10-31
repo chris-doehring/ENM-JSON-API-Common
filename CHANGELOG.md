@@ -1,4 +1,8 @@
 # Changelog
+
+## 5.1.0
+1. Add support for php `^8.0`
+
 ## 5.0.0
 1. Change the minimum php version to `^7.4` and implement typed properties
 1. Remove unnecessary phpdocs comments
